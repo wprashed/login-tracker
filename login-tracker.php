@@ -361,3 +361,21 @@ function login_data_dashboard_widget() {
 	);
 }
 add_action( 'wp_dashboard_setup', 'login_data_dashboard_widget' );
+
+// Display the dashboard widget
+function login_data_dashboard_widget_display() {
+	global $wpdb;
+
+	// Get the login data from the database
+	$login_data = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}login_data ORDER BY login_time DESC" );
+
+	// Display the login data in a table
+	echo '<table class="widefat">';
+	echo '<thead><tr><th>Username</th><th>Login Time</th><th>IP Address</th><th>Country</th></tr></thead>';
+	echo '<tbody>';
+	foreach ( $login_data as $data ) {
+		echo '<tr><td>' . $data->username . '</td><td>' . $data->login_time . '</td><td>' . $data->ip_address . '</td><td>' . $data->country . '</td></tr>';
+	}
+	echo '</tbody>';
+	echo '</table>';
+}
