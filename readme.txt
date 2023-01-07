@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: largbasket
 Donate link: https://wprashed.com
 Tags: comments, spam
 Requires at least: 5.0
