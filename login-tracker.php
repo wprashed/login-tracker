@@ -43,3 +43,56 @@ function add_login_tracker_dashboard_widget() {
     wp_add_dashboard_widget( 'login_tracker_dashboard_widget', 'Login Tracker', 'login_tracker_dashboard_widget' );
 }
 add_action( 'wp_dashboard_setup', 'add_login_tracker_dashboard_widget' );
+
+?>
+
+<?php
+/*
+* Plugin Name: User Login Data
+* Plugin URI: https://www.example.com
+* Description: This plugin stores and displays user login data on the WordPress dashboard as a dashboard widget.
+* Version: 1.0
+* Author: John Doe
+* Author URI: https://www.example.com
+* License: GPL2
+*/
+
+// Register the dashboard widget
+function user_login_data_dashboard_widget() {
+  wp_add_dashboard_widget(
+    'user_login_data_dashboard_widget', // Widget slug
+    'User Login Data', // Title
+    'display_user_login_data' // Display function
+  );
+}
+add_action( 'wp_dashboard_setup', 'user_login_data_dashboard_widget' );
+
+// Display the dashboard widget content
+function display_user_login_data() {
+  $user_login_data = get_option( 'user_login_data' );
+  if ( ! $user_login_data ) {
+    $user_login_data = array();
+  }
+  echo '<table>';
+  echo '<tr><th>Username</th><th>Last Login</th></tr>';
+  foreach ( $user_login_data as $username => $last_login ) {
+    echo '<tr><td>' . $username . '</td><td>' . $last_login . '</td></tr>';
+  }
+  echo '</table>';
+}
+
+// Store user login data
+function store_user_login_data( $user_login, $user ) {
+  $user_login_data = get_option( 'user_login_data' );
+  if ( ! $user_login_data ) {
+    $user_login_data = array();
+  }
+  $user_login_data[$user_login] = date( 'Y-m-d H:i:s' );
+  update_option( 'user_login_data', $user_login_data );
+}
+add_action( 'wp_login', 'store_user_login_data', 10, 2 );
+?>
+
+
+Regenerate response
+
