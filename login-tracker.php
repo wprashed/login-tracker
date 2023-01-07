@@ -7,6 +7,7 @@ Author: Your Name
 Author URI: http://yourwebsite.com
 */
 
+
 /* Code */
 
 function create_login_data_table() {
@@ -48,10 +49,10 @@ function login_data_dashboard_widget_display() {
 
 	// Display the login data in a table
 	echo '<table class="widefat">';
-	echo '<thead><tr><th>Username</th><th>Login Time</th><th>IP Address</th><th>Country</th></tr></thead>';
+	echo '<thead><tr><th>Username</th><th>Login Time</th><th>IP Address</th></tr></thead>';
 	echo '<tbody>';
 	foreach ( $login_data as $data ) {
-		echo '<tr><td>' . $data->username . '</td><td>' . $data->login_time . '</td><td>' . $data->ip_address . '</td><td>' . $data->country . '</td></tr>';
+		echo '<tr><td>' . $data->username . '</td><td>' . $data->login_time . '</td><td>' . $data->ip_address . '</td></tr>';
 	}
 	echo '</tbody>';
 	echo '</table>';
@@ -64,9 +65,6 @@ function store_login_data( $username ) {
 	// Get the user's IP address
 	$ip_address = $_SERVER['REMOTE_ADDR'];
 
-	// Get the user's country
-	$country = get_country_from_ip( $ip_address );
-
 	// Store the login data in the database
 	$wpdb->insert(
 		$wpdb->prefix . 'login_data',
@@ -74,10 +72,8 @@ function store_login_data( $username ) {
 			'username'    => $username,
 			'login_time'  => current_time( 'mysql' ),
 			'ip_address'  => $ip_address,
-			'country'     => $country,
 		),
 		array(
-			'%s',
 			'%s',
 			'%s',
 			'%s',
