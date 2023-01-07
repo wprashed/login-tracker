@@ -151,14 +151,14 @@ class Login_Tracker_Loader {
 			$login_data = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}login_data ORDER BY login_time DESC" );
 
 			// Display the login data in a table
-			echo '<table class="widefat">';
-			echo '<thead><tr><th>Username</th><th>Login Time</th><th>IP Address</th></tr></thead>';
-			echo '<tbody>';
+			echo wp_kses_post('<table class="widefat">');
+			echo wp_kses_post('<thead><tr><th>Username</th><th>Login Time</th><th>IP Address</th></tr></thead>');
+			echo wp_kses_post('<tbody>');
 			foreach ( $login_data as $data ) {
-				echo '<tr><td>' . $data->username . '</td><td>' . $data->login_time . '</td><td>' . $data->ip_address . '</td></tr>';
+				echo wp_kses_post('<tr><td>' . $data->username . '</td><td>' . $data->login_time . '</td><td>' . $data->ip_address . '</td></tr>');
 			}
-			echo '</tbody>';
-			echo '</table>';
+			echo wp_kses_post('</tbody>');
+			echo wp_kses_post('</table>');
 		}
 
 		// Store the login data in the database
