@@ -1,11 +1,6 @@
 <?php
 /**
  *
- * @link              https://wprashed.com
- * @since             1.0.0
- * @package           Login_Tracker
- *
- * @wordpress-plugin
  * Plugin Name:       Login Tracker
  * Plugin URI:        https://wordpress.org/plugins/login-tracker
  * Description:       Tracks user login activity and displays it on the dashboard.
