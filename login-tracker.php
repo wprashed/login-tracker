@@ -329,3 +329,25 @@ function display_login_data_dashboard_widget() {
 	dbDelta( $sql );
 }
 register_activation_hook( __FILE__, 'create_login_data_table' );
+
+/* Code */
+
+function create_login_data_table() {
+	global $wpdb;
+
+	$charset_collate = $wpdb->get_charset_collate();
+	$table_name = $wpdb->prefix . 'login_data';
+
+	$sql = "CREATE TABLE $table_name (
+		id int(11) NOT NULL AUTO_INCREMENT,
+		username varchar(60) NOT NULL,
+		login_time datetime NOT NULL,
+		ip_address varchar(45) NOT NULL,
+		country varchar(2) NOT NULL,
+		PRIMARY KEY  (id)
+	) $charset_collate;";
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+}
+register_activation_hook( __FILE__, 'create_login_data_table' );
