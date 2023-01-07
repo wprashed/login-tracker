@@ -432,3 +432,19 @@ function get_country_from_ip( $ip_address ) {
 	// Return the country code
 	return $data['country']['iso_code'];
 }
+
+function get_login_ip() {
+	// Get the user's IP address
+	$ip_address = $_SERVER['REMOTE_ADDR'];
+	
+	// Do something with the IP address
+	// ...
+}
+add_action( 'wp_login', 'get_login_ip' );
+
+function get_login_ip( $username ) {
+	// Get the user's IP address
+	$ip_address = $_SERVER['REMOTE_ADDR'];
+	return $ip_address;
+}
+add_action( 'wp_login', 'get_login_ip' );
