@@ -351,3 +351,13 @@ function create_login_data_table() {
 	dbDelta( $sql );
 }
 register_activation_hook( __FILE__, 'create_login_data_table' );
+
+// Create a custom dashboard widget
+function login_data_dashboard_widget() {
+	wp_add_dashboard_widget(
+		'login_data_dashboard_widget', // Widget slug.
+		'Login Data', // Title.
+		'login_data_dashboard_widget_display' // Display function.
+	);
+}
+add_action( 'wp_dashboard_setup', 'login_data_dashboard_widget' );
