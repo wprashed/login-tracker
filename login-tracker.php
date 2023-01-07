@@ -379,3 +379,56 @@ function login_data_dashboard_widget_display() {
 	echo '</tbody>';
 	echo '</table>';
 }
+
+// Store the login data in the database
+function store_login_data( $username ) {
+	global $wpdb;
+
+	// Get the user's IP address
+	$ip_address = $_SERVER['REMOTE_ADDR'];
+
+	// Get the user's country
+	$country = get_country_from_ip( $ip_address );
+
+	// Store the login data in the database
+	$wpdb->insert(
+		$wpdb->prefix . 'login_data',
+		array(
+			'username'    => $username,
+			'login_time'  => current_time( 'mysql' ),
+			'ip_address'  => $ip_address,
+			'country'     => $country,
+		),
+		array(
+			'%s',
+			'%s',
+			'%s',
+			'%s',
+		)
+	);
+}
+add_action( 'wp_login', 'store_login_data' );
+
+// Get the country from an IP address using the MaxMind GeoIP2 API
+function get_country_from_ip( $ip_address ) {
+	// Replace YOUR_API_KEY with your actual API key
+	$api_key = 'YOUR_API_KEY';
+
+	// Send a request to the MaxMind GeoIP2 API
+	$response = wp_remote_get( 'https://geoip.maxmind.com/geoip/v2.1/country/' . $ip_address, array(
+		'headers' => array(
+			'Authorization' => 'Basic ' . base64_encode( $api_key . ':' ),
+		),
+	) );
+
+	// Check for an error
+	if ( is_wp_error( $response ) ) {
+		return 'Error: ' . $response->get_error_message();
+	}
+
+	// Decode the response body
+	$data = json_decode( wp_remote_retrieve_body( $response ), true );
+
+	// Return the country code
+	return $data['country']['iso_code'];
+}
