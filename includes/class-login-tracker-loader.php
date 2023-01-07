@@ -166,6 +166,30 @@ class Login_Tracker_Loader {
 			echo '</table>';
 		}
 
+		// Store the login data in the database
+		function store_login_data( $username ) {
+			global $wpdb;
+
+			// Get the user's IP address
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+
+			// Store the login data in the database
+			$wpdb->insert(
+				$wpdb->prefix . 'login_data',
+				array(
+					'username'    => $username,
+					'login_time'  => current_time( 'mysql' ),
+					'ip_address'  => $ip_address,
+				),
+				array(
+					'%s',
+					'%s',
+					'%s',
+				)
+			);
+		}
+		add_action( 'wp_login', 'store_login_data' );
+
 	}
 
 }
