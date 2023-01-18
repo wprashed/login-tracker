@@ -166,7 +166,7 @@ class Login_Tracker_Loader {
 			global $wpdb;
 
 			// Get the user's IP address
-			$ip_address = $_SERVER['REMOTE_ADDR'];
+			$ip_address = wp_kses_post( $_SERVER['REMOTE_ADDR'] );
 
 			// Store the login data in the database
 			$wpdb->insert(
