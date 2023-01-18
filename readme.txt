@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Login Tracker ===
 Contributors: largbasket
 Donate link: https://wprashed.com
 Tags: login, tracker, login tracker
